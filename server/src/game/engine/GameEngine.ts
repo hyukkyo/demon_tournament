@@ -106,6 +106,18 @@ export class GameEngine {
       console.log(`Player 1: ${card1}`);
       console.log(`Player 2: ${card2}`);
 
+      // 카드 공개 이벤트 추가
+      events.push({
+        type: BattleEventType.CARD_REVEAL,
+        playerId: '',
+        data: {
+          cardIndex: i,
+          player1Card: card1,
+          player2Card: card2,
+        },
+        cardIndex: i,
+      });
+
       // 방어 초기화 (매 카드마다)
       newState.player1.defenseActive = false;
       newState.player1.defenseAmount = 0;
@@ -114,6 +126,10 @@ export class GameEngine {
 
       // 카드 우선순위별로 처리
       const roundEvents = this.processCardsByPriority(newState, card1, card2);
+      // 각 이벤트에 cardIndex 추가
+      roundEvents.forEach((event) => {
+        event.cardIndex = i;
+      });
       events.push(...roundEvents);
 
       // 승패 판정
@@ -125,6 +141,7 @@ export class GameEngine {
           type: BattleEventType.GAME_END,
           playerId: '',
           data: { result },
+          cardIndex: i,
         });
         break;
       }

@@ -110,6 +110,7 @@ export type GameState = {
 // ========================================
 
 export enum BattleEventType {
+  CARD_REVEAL = 'CARD_REVEAL', // 카드 공개
   MOVE = 'MOVE',
   DEFEND = 'DEFEND',
   ATTACK = 'ATTACK',
@@ -122,6 +123,7 @@ export type BattleEvent = {
   type: BattleEventType;
   playerId: PlayerId;
   data: any; // 이벤트별 데이터
+  cardIndex?: number; // 어느 카드(0,1,2)에서 발생한 이벤트인지
 };
 
 // ========================================
