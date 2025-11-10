@@ -11,8 +11,6 @@ export function BattleLog({ events }: BattleLogProps) {
 
   const getEventText = (event: BattleEvent): string => {
     switch (event.type) {
-      case BattleEventType.CARD_REVEAL:
-        return `Card ${event.data.cardIndex + 1} revealed`
       case BattleEventType.MOVE:
         return `${event.playerId} moved ${event.data.direction}`
       case BattleEventType.DEFEND:
@@ -32,8 +30,6 @@ export function BattleLog({ events }: BattleLogProps) {
 
   const getEventIcon = (event: BattleEvent): string => {
     switch (event.type) {
-      case BattleEventType.CARD_REVEAL:
-        return '🎴'
       case BattleEventType.MOVE:
         return '🏃'
       case BattleEventType.DEFEND:
@@ -64,31 +60,22 @@ export function BattleLog({ events }: BattleLogProps) {
           overflowY: 'auto',
         }}
       >
-        {events.map((event, idx) => {
-          let borderColor = '#4CAF50'
-          if (event.type === BattleEventType.DAMAGE_DEALT) {
-            borderColor = '#f44336'
-          } else if (event.type === BattleEventType.CARD_REVEAL) {
-            borderColor = '#9c27b0'
-          }
-
-          return (
-            <div
-              key={idx}
-              style={{
-                padding: '0.5rem',
-                marginBottom: '0.5rem',
-                background: 'white',
-                borderRadius: '4px',
-                fontSize: '0.9rem',
-                borderLeft: `3px solid ${borderColor}`,
-              }}
-            >
-              <span style={{ marginRight: '0.5rem' }}>{getEventIcon(event)}</span>
-              {getEventText(event)}
-            </div>
-          )
-        })}
+        {events.map((event, idx) => (
+          <div
+            key={idx}
+            style={{
+              padding: '0.5rem',
+              marginBottom: '0.5rem',
+              background: 'white',
+              borderRadius: '4px',
+              fontSize: '0.9rem',
+              borderLeft: event.type === BattleEventType.DAMAGE_DEALT ? '3px solid #f44336' : '3px solid #4CAF50',
+            }}
+          >
+            <span style={{ marginRight: '0.5rem' }}>{getEventIcon(event)}</span>
+            {getEventText(event)}
+          </div>
+        ))}
       </div>
     </div>
   )
