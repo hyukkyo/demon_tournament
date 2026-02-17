@@ -1,51 +1,46 @@
-import express from 'express';
-import { createServer } from 'http';
+import http from 'http';
 import { Server } from 'socket.io';
-import cors from 'cors';
-import { MatchmakingService } from './services/MatchmakingService';
-import { setupGameHandlers } from './socket/gameHandler';
+import app from './app';
+import { config } from './config/env';
+import { connectDatabase } from './config/database';
+import logger from './utils/logger';
 
-const app = express();
-const httpServer = createServer(app);
-const io = new Server(httpServer, {
+const server = http.createServer(app);
+
+// Socket.IO 설정
+const io = new Server(server, {
   cors: {
-    origin: 'http://localhost:5173', // Vite 기본 포트
-    methods: ['GET', 'POST'],
+    origin: config.clientUrl,
+    credentials: true,
   },
 });
 
-app.use(cors());
-app.use(express.json());
-
-// 매칭 서비스 인스턴스
-const matchmakingService = new MatchmakingService();
-
-// 기본 라우트
-app.get('/health', (req, res) => {
-  res.json({ status: 'ok', message: 'Server is running' });
-});
-
-// 서버 통계 API
-app.get('/stats', (req, res) => {
-  const stats = matchmakingService.getStats();
-  res.json(stats);
-});
-
-// Socket.IO 연결 처리
+// Socket.IO 연결 핸들러
 io.on('connection', (socket) => {
-  setupGameHandlers(socket, matchmakingService);
+  logger.info(`Client connected: ${socket.id}`);
+
+  socket.on('disconnect', () => {
+    logger.info(`Client disconnected: ${socket.id}`);
+  });
 });
 
-const PORT = process.env.PORT || 3000;
+// 서버 시작
+const startServer = async () => {
+  try {
+    // 데이터베이스 연결
+    await connectDatabase();
 
-httpServer.listen(PORT, () => {
-  console.log(`
-╔══════════════════════════════════════╗
-║  🎮 Demon Tournament Server         ║
-║                                      ║
-║  🚀 Server: http://localhost:${PORT}   ║
-║  📡 WebSocket: Ready                 ║
-║  🎯 Game Engine: Loaded              ║
-╚══════════════════════════════════════╝
-  `);
-});
+    // 서버 시작
+    server.listen(config.port, () => {
+      logger.info(`Server is running on port ${config.port}`);
+      logger.info(`Environment: ${config.env}`);
+    });
+  } catch (error) {
+    logger.error('Failed to start server:', error);
+    process.exit(1);
+  }
+};
+
+startServer();
+
+export { io };
