@@ -7,7 +7,8 @@ interface RoomState {
   isLoading: boolean;
   error: string | null;
 
-  setRoom: (room: Room) => void;
+  setRoom: (room: Room | null) => void;
+  updateRoom: (room: Room) => void;
   updateRoomStatus: (status: Room['status']) => void;
   clearRoom: () => void;
   setLoading: (isLoading: boolean) => void;
@@ -22,6 +23,8 @@ export const useRoomStore = create<RoomState>()(
       error: null,
 
       setRoom: (room) => set({ room, error: null }),
+
+      updateRoom: (room) => set({ room }),
 
       updateRoomStatus: (status) =>
         set((state) => ({

@@ -1,0 +1,356 @@
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 2rem;
+}
+
+.content {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.message {
+  text-align: center;
+  color: #fbbf24;
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: rgba(251, 191, 36, 0.2);
+  border-radius: 0.5rem;
+  animation: fadeIn 0.3s ease-in;
+}
+
+.message.revealing {
+  background: rgba(34, 197, 94, 0.3);
+  color: #22c55e;
+  font-size: 1.5rem;
+  animation: pulse 1s infinite;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+/* 플레이어 정보 */
+.playerInfo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.infoPanel {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.infoPanel h3 {
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.stat {
+  display: flex;
+  justify-content: space-between;
+  color: white;
+  font-size: 1rem;
+}
+
+.healthy {
+  color: #22c55e;
+  font-weight: 600;
+}
+
+.damaged {
+  color: #ef4444;
+  font-weight: 600;
+}
+
+/* 보드 */
+.board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 1rem;
+}
+
+.cell {
+  aspect-ratio: 1;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.cell.myCell {
+  background: rgba(34, 197, 94, 0.3);
+  border-color: #22c55e;
+}
+
+.cell.opponentCell {
+  background: rgba(239, 68, 68, 0.3);
+  border-color: #ef4444;
+}
+
+.player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.playerIcon {
+  font-size: 2rem;
+}
+
+.playerName {
+  font-size: 0.75rem;
+  color: white;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* 카드 정보 */
+.cardInfo {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.currentCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  font-size: 1.125rem;
+}
+
+.cardName {
+  font-weight: 600;
+  color: #fbbf24;
+}
+
+/* 카드 공개 */
+.cardReveal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 1rem;
+  animation: slideUp 0.5s ease-out;
+}
+
+.revealCard {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  min-width: 200px;
+  text-align: center;
+  animation: flipIn 0.6s ease-out;
+}
+
+.cardLabel {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 0.5rem;
+}
+
+.revealCard .cardName {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+}
+
+.vsText {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #fbbf24;
+  animation: pulse 1s infinite;
+}
+
+@keyframes flipIn {
+  from {
+    transform: rotateY(90deg);
+    opacity: 0;
+  }
+  to {
+    transform: rotateY(0);
+    opacity: 1;
+  }
+}
+
+/* 진행 상태 */
+.progress {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.progressDot {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  transition: all 0.3s;
+}
+
+.progressDot.completed {
+  background: #22c55e;
+  border-color: #22c55e;
+  color: white;
+}
+
+.progressDot.current {
+  background: #fbbf24;
+  border-color: #fbbf24;
+  color: white;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* 실행 버튼 제거 (자동 진행) */
+
+/* 게임 종료 화면 */
+.finishScreen {
+  text-align: center;
+  padding: 3rem 2rem;
+}
+
+.finishIcon {
+  font-size: 6rem;
+  margin-bottom: 1rem;
+  animation: scaleIn 0.5s ease-out;
+}
+
+.finishTitle {
+  font-size: 3rem;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 2rem;
+  animation: slideUp 0.5s ease-out 0.2s both;
+}
+
+.finalStats {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  animation: slideUp 0.5s ease-out 0.4s both;
+}
+
+.statRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem;
+  color: white;
+  font-size: 1.25rem;
+}
+
+.homeButton {
+  padding: 1rem 2rem;
+  background: white;
+  color: #667eea;
+  font-size: 1.125rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  animation: slideUp 0.5s ease-out 0.6s both;
+}
+
+.homeButton:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

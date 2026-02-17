@@ -6,11 +6,12 @@ export interface Position {
 export interface Player {
   playerId: string;
   username: string;
-  character?: Character;
+  character?: string | Character;  // string(characterId) 또는 Character 객체
   selectedCards: string[];
   health: number;
   energy: number;
   position: Position;
+  defense?: number;  // 방어력 (임시)
   isReady: boolean;
   isConnected: boolean;
 }

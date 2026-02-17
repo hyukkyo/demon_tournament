@@ -6,10 +6,13 @@ class SocketService {
   private socket: Socket | null = null;
 
   connect(): Socket {
-    if (this.socket?.connected) {
+    // 이미 socket이 존재하면 재사용 (연결 여부와 관계없이)
+    if (this.socket) {
+      console.log('[SocketService] Reusing existing socket:', this.socket.id);
       return this.socket;
     }
 
+    console.log('[SocketService] Creating new socket connection');
     this.socket = io(SOCKET_URL, {
       transports: ['websocket'],
       reconnection: true,
