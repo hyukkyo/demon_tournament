@@ -1,146 +1,60 @@
-# Demon Tournament
+# 👹 데몬 토너먼트
 
-1대1 멀티플레이 턴제 전략 배틀 게임
+1대1 멀티플레이 턴제 전략 배틀 웹 게임
 
-## 프로젝트 구조
+## 🚀 빠른 시작
 
-```
-demon_tournament/
-├── client/          # React 프론트엔드
-├── server/          # Node.js 백엔드
-└── docs/            # 문서
-```
-
-## 시작하기
-
-### 사전 요구사항
-
-- Node.js 18+
-- MongoDB (로컬 또는 MongoDB Atlas)
-- npm 또는 yarn
-
-### 설치 방법
-
-#### 1. 백엔드 설정
-
+**1. 의존성 설치 (최초 1회)**
 ```bash
-cd server
-npm install
-cp .env.example .env
-# .env 파일을 열어 환경변수 설정
+cd server && npm install && cd ../client && npm install && cd ..
 ```
 
-`.env` 파일 설정:
-```
-NODE_ENV=development
-PORT=3000
-MONGODB_URI=mongodb://localhost:27017/demon_tournament
-CLIENT_URL=http://localhost:5173
-LOG_LEVEL=info
-```
-
-#### 2. 프론트엔드 설정
-
-```bash
-cd client
-npm install
-cp .env.example .env
-```
-
-`.env` 파일 설정:
-```
-VITE_API_URL=http://localhost:3000
-VITE_SOCKET_URL=http://localhost:3000
-VITE_ENV=development
-```
-
-### 실행 방법
-
-#### 개발 모드
-
-터미널 1 - 백엔드 실행:
-```bash
-cd server
-npm run dev
-```
-
-터미널 2 - 프론트엔드 실행:
-```bash
-cd client
-npm run dev
-```
-
-또는 루트 디렉토리에서:
+**2. 서버 실행**
 ```bash
 ./start.sh
 ```
 
-#### 서버 확인
-- 백엔드: http://localhost:3000
-- 프론트엔드: http://localhost:5173
-- Health Check: http://localhost:3000/api/health
-
-### MongoDB 설정
-
-#### 로컬 MongoDB 사용
-```bash
-# MongoDB 설치 (Ubuntu)
-sudo apt-get install mongodb
-
-# MongoDB 시작
-sudo systemctl start mongodb
+**3. 브라우저에서 접속**
+```
+http://localhost:5173
 ```
 
-#### MongoDB Atlas 사용 (클라우드)
-1. [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) 가입
-2. 무료 클러스터 생성
-3. 연결 문자열 복사
-4. `server/.env`의 `MONGODB_URI`에 붙여넣기
+**4. 서버 종료**
+```bash
+./stop.sh
+```
 
-## 개발 상태
+## 개발 환경 실행 (수동)
 
-### Phase 1: 기반 구조 ✅ (완료)
-- [x] 프로젝트 초기 구조 생성
-- [x] 패키지 설치 및 기본 설정
-- [x] TypeScript 설정
-- [x] ESLint, Prettier 설정
-- [x] 기본 서버 구축
-- [x] Socket.IO 연결 설정
-- [x] MongoDB 연결 설정
-- [x] Health Check API
-- [x] 기본 클라이언트 구축
-- [x] 전역 상태 관리 설정
+각 터미널에서 별도로 실행:
 
-### Phase 2: 게임 시스템 개발 (진행 예정)
-- [ ] 매칭 시스템
-- [ ] 캐릭터 & 카드 시스템
-- [ ] 배틀 시스템
+### 1. 서버 터미널
+```bash
+cd server
+npm run dev
+```
+서버가 `http://localhost:3001`에서 시작됩니다.
 
-## 문서
+### 2. 클라이언트 터미널
+```bash
+cd client
+npm run dev
+```
+클라이언트가 `http://localhost:5173`에서 시작됩니다.
 
-- [개발 계획서](./docs/plan/development_plan.md)
-- [게임 디자인 문서](./docs/plan/game_design_document.md)
-- [백엔드 설계](./docs/plan/backend_design.md)
-- [프론트엔드 설계](./docs/plan/frontend_design.md)
+## 기술 스택
 
-## 스크립트
+| | 기술 |
+|---|---|
+| 프론트엔드 | React 18 + TypeScript + Vite + Tailwind CSS |
+| 백엔드 | Node.js + Express + TypeScript |
+| 실시간 통신 | Socket.IO |
+| 배포 | Vercel (FE) + Railway (BE) |
 
-### 백엔드
-- `npm run dev` - 개발 서버 실행
-- `npm run build` - 프로덕션 빌드
-- `npm start` - 프로덕션 서버 실행
-- `npm test` - 테스트 실행
-- `npm run lint` - 린트 검사
-- `npm run format` - 코드 포맷팅
+## 게임 방법
 
-### 프론트엔드
-- `npm run dev` - 개발 서버 실행
-- `npm run build` - 프로덕션 빌드
-- `npm run preview` - 빌드 미리보기
-- `npm test` - 테스트 실행
-- `npm run lint` - 린트 검사
-- `npm run format` - 코드 포맷팅
-
-## 라이센스
-
-MIT
+1. **방 만들기** 또는 **방 입장하기**로 매칭
+2. 3가지 캐릭터 중 하나를 **선택**
+3. 매 라운드 **카드 3장** 선택
+4. 카드가 순서대로 공개되며 배틀 진행
+5. 상대 체력을 0으로 만들면 **승리**!

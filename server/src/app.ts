@@ -2,6 +2,8 @@ import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import { config } from './config/env';
 import { errorHandler } from './middleware/errorHandler';
+import roomRoutes from './routes/room.routes';
+import gameRoutes from './routes/game.routes';
 
 const app: Application = express();
 
@@ -36,6 +38,10 @@ app.get('/', (_req: Request, res: Response) => {
     version: '1.0.0',
   });
 });
+
+// API 라우트
+app.use('/api', roomRoutes);
+app.use('/api', gameRoutes);
 
 // 에러 핸들러 (마지막에 위치)
 app.use(errorHandler);

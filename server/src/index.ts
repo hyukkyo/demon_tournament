@@ -4,6 +4,8 @@ import app from './app';
 import { config } from './config/env';
 import { connectDatabase } from './config/database';
 import logger from './utils/logger';
+import { setupSocketHandlers } from './socket/socket.handler';
+import { seedDatabase } from './utils/seed';
 
 const server = http.createServer(app);
 
@@ -15,20 +17,17 @@ const io = new Server(server, {
   },
 });
 
-// Socket.IO 연결 핸들러
-io.on('connection', (socket) => {
-  logger.info(`Client connected: ${socket.id}`);
-
-  socket.on('disconnect', () => {
-    logger.info(`Client disconnected: ${socket.id}`);
-  });
-});
+// Socket.IO 핸들러 설정
+setupSocketHandlers(io);
 
 // 서버 시작
 const startServer = async () => {
   try {
     // 데이터베이스 연결
     await connectDatabase();
+    
+    // 데이터베이스 시드
+    await seedDatabase();
 
     // 서버 시작
     server.listen(config.port, () => {
